@@ -1,0 +1,10 @@
+erDiagram
+    BOOKINGS {
+        bigint booking_id PK
+        bigint user_id FK
+        bigint show_id FK
+        enum booking_status
+        enum payment_status
+        datetime created_at
+        datetime updated_at
+    }

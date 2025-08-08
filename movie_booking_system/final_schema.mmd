@@ -1,0 +1,81 @@
+erDiagram
+    MOVIES {
+        bigint movie_id PK
+        varchar title
+        varchar language
+        int duration_mins
+        varchar rating
+        date release_date
+    }
+
+    THEATRES {
+        bigint theatre_id PK
+        varchar name
+        varchar city
+        text address
+    }
+
+    SCREENS {
+        bigint screen_id PK
+        bigint theatre_id FK
+        varchar name
+        int total_seats
+    }
+
+    SEATS {
+        bigint seat_id PK
+        bigint screen_id FK
+        varchar seat_number
+        enum seat_type
+    }
+
+    SHOWS {
+        bigint show_id PK
+        bigint movie_id FK
+        bigint screen_id FK
+        datetime start_time
+        datetime end_time
+    }
+
+    BOOKINGS {
+        bigint booking_id PK
+        bigint user_id FK
+        bigint show_id FK
+        enum booking_status
+        enum payment_status
+        datetime created_at
+        datetime updated_at
+    }
+
+    BOOKING_SEATS {
+        bigint booking_seat_id PK
+        bigint booking_id FK
+        bigint seat_id FK
+        decimal price
+    }
+
+    SEAT_LOCKS {
+        bigint seat_id FK
+        bigint show_id FK
+        bigint user_id FK
+        datetime expires_at
+    }
+
+    USERS {
+        bigint user_id PK
+        varchar name
+        varchar email
+        varchar phone
+    }
+
+    THEATRES ||--o{ SCREENS : has
+    SCREENS ||--o{ SEATS : contains
+    MOVIES ||--o{ SHOWS : features
+    SCREENS ||--o{ SHOWS : hosts
+    SHOWS ||--o{ BOOKINGS : includes
+    BOOKINGS ||--o{ BOOKING_SEATS : contains
+    SEATS ||--o{ BOOKING_SEATS : reserved_in
+    USERS ||--o{ BOOKINGS : makes
+    SHOWS ||--o{ SEAT_LOCKS : locks
+    SEATS ||--o{ SEAT_LOCKS : locked_for
+    USERS ||--o{ SEAT_LOCKS : initiated

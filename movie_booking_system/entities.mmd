@@ -1,0 +1,22 @@
+erDiagram
+    MOVIES
+    THEATRES
+    SCREENS
+    SEATS
+    SHOWS
+    BOOKINGS
+    BOOKING_SEATS
+    SEAT_LOCKS
+    USERS
+
+    THEATRES ||--o{ SCREENS : has
+    SCREENS ||--o{ SEATS : contains
+    MOVIES ||--o{ SHOWS : features
+    SCREENS ||--o{ SHOWS : hosts
+    SHOWS ||--o{ BOOKINGS : includes
+    BOOKINGS ||--o{ BOOKING_SEATS : contains
+    SEATS ||--o{ BOOKING_SEATS : reserved_in
+    USERS ||--o{ BOOKINGS : makes
+    SHOWS ||--o{ SEAT_LOCKS : locks
+    SEATS ||--o{ SEAT_LOCKS : locked_for
+    USERS ||--o{ SEAT_LOCKS : initiated
